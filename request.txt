@@ -1,0 +1,8 @@
+Jeremy Anderson,Senior,ECE,CS,1040
+Jeremy Anderson,Senior,ECE,CS,1060
+Peter Bond,Junior,CS,CS,1060
+Peter Bond,Junior,CS,CS,1040
+Jonah Fish, Senior,CS,CS,1060
+Jonah Fish, Senior,CS,CS,1040
+Jonathan Fin,Freshman,CS,CS,1040
+Jonathan Fin,Freshman,CS,CS,1060

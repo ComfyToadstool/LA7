@@ -1,5 +1,8 @@
 package edu.wmich.cs1120.StanRitsema.LA7;
 
+import java.io.*;
+import java.util.ArrayList;
+
 public class CourseRegistrationSystem {
 	
 	public static void main(String[] args) throws IOException {
