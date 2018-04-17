@@ -1,12 +1,17 @@
 package edu.wmich.cs1120.StanRitsema.LA7;
 
-public class Node<E> implements INode<E>{
+public class Node<E extends Comparable> implements INode<E>{
 	
 	E data;
 	Node<E> next;
 	
 	public Node(){
 		data = null;
+		next = null;
+	}
+	
+	public Node( E input ) {
+		this.data = input;
 		next = null;
 	}
 	

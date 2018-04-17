@@ -1,6 +1,6 @@
 package edu.wmich.cs1120.StanRitsema.LA7;
 
-public class Request<T> implements Comparable<Request<T>>{
+public class Request implements Comparable<Request>{
 	
 	private String studentName;
 	private String studentDept;
@@ -9,7 +9,7 @@ public class Request<T> implements Comparable<Request<T>>{
 	private int courseNumber;
 
 	@Override
-	public int compareTo(Request<T> other) {
+	public int compareTo(Request other) {
 		
 		int priority = 0;
 		
