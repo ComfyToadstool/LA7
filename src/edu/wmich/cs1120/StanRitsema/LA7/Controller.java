@@ -2,6 +2,8 @@ package edu.wmich.cs1120.StanRitsema.LA7;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.ListIterator;
+import java.util.function.Consumer;
 
 public class Controller implements IController{
 	
@@ -55,7 +57,7 @@ public class Controller implements IController{
 				
 				// read in the record
 				
-				String line = file1.readLine();
+				String line = file2.readLine();
 				String[] field = line.split(",");
 				
 				String sName = field[0];
@@ -85,7 +87,32 @@ public class Controller implements IController{
 
 	@Override
 	public void processRequests() {
-		// TODO Auto-generated method stub
+		
+		if( requests.isEmpty() ) {
+			System.err.println("No requests to process!");
+			return;
+		}
+		
+		while( !requests.isEmpty() ) {
+			
+			Request pending = requests.dequeque();
+			
+			System.out.println("Request" + pending + " processed.");
+			
+			String sName = pending.getName();
+			String cDept = pending.getCourseDept();
+			int cNum = pending.getCourseNumber();
+			
+			Course course = getCourse(cDept, cNum);
+			
+			if( course.isFull() ) {
+				System.out.println(sName + " cannot register for "
+						+ cDept + " " + cNum);
+			}else {
+				course.addStudent(sName);
+			}
+			
+		}
 		
 	}
 
@@ -108,10 +135,19 @@ public class Controller implements IController{
 		return course;
 		
 	}
+	
+	Consumer<Course> action = x -> {
+		
+		x.printClassList();
+		
+	};
 
 	@Override
 	public void printClassList() {
-		// TODO Auto-generated method stub
+		
+		ListIterator<Course> registrations = courses.listIterator();
+		
+		registrations.forEachRemaining(action);
 		
 	}
 

@@ -1,6 +1,8 @@
 package edu.wmich.cs1120.StanRitsema.LA7;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
+import java.util.function.Consumer;
 
 public class Course implements ICourse{
 	
@@ -15,6 +17,7 @@ public class Course implements ICourse{
 		this.dept = dept;
 		this.number = number;
 		this.capacity = capacity;
+		students = new ArrayList<>();
 		
 	}
 
@@ -30,11 +33,26 @@ public class Course implements ICourse{
 		this.students.add(name);
 		this.enrollment++;
 		
+		System.out.println(name + " successfully registered "
+				+ this.dept + " " + this.number);
+		
 	}
+	
+	Consumer<String> action = x -> {
+		
+		System.out.println(x);
+		
+	};
 
 	@Override
 	public void printClassList() {
-		// TODO Auto-generated method stub
+		
+		System.out.println("Class List for " + this.dept
+				+ " " + this.number);
+		
+		ListIterator<String> rollCall = students.listIterator();
+		
+		rollCall.forEachRemaining(action);
 		
 	}
 	

@@ -7,6 +7,18 @@ public class Request implements Comparable<Request>{
 	private String studentLevel;
 	private String courseDept;
 	private int courseNumber;
+	
+	public String getName() {
+		return this.studentName;
+	}
+	
+	public String getCourseDept() {
+		return this.courseDept;
+	}
+	
+	public int getCourseNumber() {
+		return this.courseNumber;
+	}
 
 	@Override
 	public int compareTo(Request other) {
