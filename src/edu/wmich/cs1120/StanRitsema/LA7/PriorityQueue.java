@@ -6,16 +6,29 @@ public class PriorityQueue<T extends Comparable<T>> {
 	
 	Node<T> front;
 	
+	/**
+	 * Basic no-argument Constructor.
+	 */
 	public PriorityQueue() {
 		front = null;
 	}
 
+	/**
+	 * Checks whether the queue is empty.  True if so, false otherwise.
+	 * 
+	 * @return boolean
+	 */
 	public boolean isEmpty() {
 		
 		return ( front == null );
 		
 	}
 	
+	/**
+	 * Pops the front element off the queue and returns it.
+	 * 
+	 * @return data
+	 */
 	public T dequeque() {
 		
 		T data;
@@ -28,6 +41,12 @@ public class PriorityQueue<T extends Comparable<T>> {
 		
 	}
 	
+	/**
+	 * Enqueues 'next', comparing it to the current queue values 
+	 * on the way in.
+	 * 
+	 * @param next
+	 */
 	public void enqueue(T next) {
 		
 		Node<T> pending = new Node<T>(next);

@@ -12,14 +12,31 @@ public class Course implements ICourse{
 	private int enrollment;
 	private ArrayList<String> students;
 	
+	/**
+	 * Returns this Course's dept.
+	 * 
+	 * @return dept
+	 */
 	public String getDept() {
 		return this.dept;
 	}
 	
+	/**
+	 * Returns this Course's number.
+	 * 
+	 * @return number
+	 */
 	public int getNumber() {
 		return this.number;
 	}
 	
+	/**
+	 * Constructor for Course.  Takes three parameters.
+	 * 
+	 * @param dept
+	 * @param number
+	 * @param capacity
+	 */
 	public Course(String dept, int number, int capacity) {
 		
 		this.dept = dept;
@@ -29,12 +46,25 @@ public class Course implements ICourse{
 		
 	}
 
+	/**
+	 * Checks whether or not this course is at capacity.  True if 
+	 * so, false if not.
+	 * 
+	 * @return boolean
+	 */
 	@Override
 	public boolean isFull() {
 		
 		return (this.enrollment == this.capacity);
 	}
 
+	/**
+	 * Adds a student named 'name' to the list of students enrolled in 
+	 * the course.  Then increments enrollment and prints a relevant 
+	 * message.
+	 * 
+	 * @param name
+	 */
 	@Override
 	public void addStudent(String name) {
 		
@@ -46,12 +76,19 @@ public class Course implements ICourse{
 		
 	}
 	
+	/**
+	 * Basic Consumer of Strings.  Simply prints to the console.
+	 */
 	Consumer<String> action = x -> {
 		
 		System.out.println(x);
 		
 	};
 
+	/**
+	 * Prints this course's dept and number, then the names of all students 
+	 * enrolled.
+	 */
 	@Override
 	public void printClassList() {
 		
@@ -64,6 +101,14 @@ public class Course implements ICourse{
 		
 	}
 	
+	/**
+	 * Checks whether or not this course matches the dept and number 
+	 * combination provided.  Returns true if so, false otherwise.
+	 * 
+	 * @param dept
+	 * @param number
+	 * @return boolean
+	 */
 	public boolean thisCourse(String dept, int number) {
 		
 		boolean found = false;
@@ -76,6 +121,12 @@ public class Course implements ICourse{
 		
 	}
 	
+	/**
+	 * Incomplete toString override.  Returns a String including dept, 
+	 * number, and capacity.
+	 * 
+	 * @return String
+	 */
 	public String toString() {
 		
 		return (this.dept + "," + this.number + "," + this.capacity);

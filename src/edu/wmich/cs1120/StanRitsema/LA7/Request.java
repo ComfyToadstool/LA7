@@ -8,18 +8,41 @@ public class Request implements Comparable<Request>{
 	private String courseDept;
 	private int courseNumber;
 	
+	/**
+	 * Returns the name of the student making the request.
+	 * 
+	 * @return studentName
+	 */
 	public String getName() {
 		return this.studentName;
 	}
 	
+	/**
+	 * Returns the course department to which the requested class belongs.
+	 * 
+	 * @return courseDept
+	 */
 	public String getCourseDept() {
 		return this.courseDept;
 	}
 	
+	/**
+	 * Returns the number of the requested class.
+	 * 
+	 * @return
+	 */
 	public int getCourseNumber() {
 		return this.courseNumber;
 	}
 
+	/**
+	 * Override of the compareTo method.  Checks this request against another for priority.
+	 * Returns a positive value if this request has higher priority, negative value if it 
+	 * has lower, and 0 if the priorities are equal.
+	 * 
+	 * @param other
+	 * @return priority
+	 */
 	@Override
 	public int compareTo(Request other) {
 		
@@ -53,6 +76,15 @@ public class Request implements Comparable<Request>{
 		return priority;
 	}
 	
+	/**
+	 * Constructor for a Request object.  Takes 5 parameters.
+	 * 
+	 * @param studentName
+	 * @param studentDept
+	 * @param studentLevel
+	 * @param courseDept
+	 * @param courseNumber
+	 */
 	public Request( String studentName, String studentDept,
 			String studentLevel, String courseDept, int courseNumber) {
 		
@@ -64,6 +96,13 @@ public class Request implements Comparable<Request>{
 		
 	}
 	
+	/**
+	 * Takes a String, a student level, and returns the floor of how many years 
+	 * remaining until graduation (i.e. junior means at least 1 years remaining).
+	 * 
+	 * @param level
+	 * @return years
+	 */
 	public int yearsFromGraduation( String level ) {
 		
 		int years = -1;
@@ -82,12 +121,23 @@ public class Request implements Comparable<Request>{
 		
 	}
 	
+	/**
+	 * Check function for whether the requesting student's major is within the same 
+	 * department as the requested class.  True if so, false otherwise.
+	 * 
+	 * @return boolean
+	 */
 	public boolean deptMatch() {
 		
 		return ( this.studentDept.equalsIgnoreCase(this.courseDept) );
 		
 	}
 	
+	/**
+	 * Incomplete toString override.  Displays the student name, course's dept., and course's number.
+	 * 
+	 * @return string
+	 */
 	public String toString() {
 		
 		return (this.studentName + " is requesting "

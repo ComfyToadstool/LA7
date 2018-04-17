@@ -14,6 +14,14 @@ public class Controller implements IController{
 	BufferedReader file1;
 	BufferedReader file2;
 	
+	/**
+	 * Constructor for Controller.  Takes 4 parameters.
+	 * 
+	 * @param requestQueue
+	 * @param courses
+	 * @param fileIn
+	 * @param fileIn1
+	 */
 	public Controller(PriorityQueue<Request> requestQueue,
 			ArrayList<Course> courses, BufferedReader fileIn,
 			BufferedReader fileIn1) {
@@ -25,6 +33,10 @@ public class Controller implements IController{
 		
 	}
 	
+	/**
+	 * Reads the courses in from the provided file.  Stores them in an 
+	 * ArrayList.  Throws an IOException if errors occur while reading.
+	 */
 	@Override
 	public void readCourseFile() {
 		
@@ -66,6 +78,11 @@ public class Controller implements IController{
 		
 	}
 
+	/**
+	 * Reads the requests in from the provided file.  Creates a request object for each, 
+	 * then passes it to the addRequest method.  Throws an IOException if errors occur 
+	 * while reading.
+	 */
 	@Override
 	public void readRequestFile() {
 		
@@ -103,6 +120,11 @@ public class Controller implements IController{
 		
 	}
 
+	/**
+	 * Passes the Request 'req' to the enqueue method of the PriorityQueue.
+	 * 
+	 * @param req
+	 */
 	@Override
 	public void addRequest(Request req) {
 		
@@ -110,6 +132,11 @@ public class Controller implements IController{
 		
 	}
 
+	/**
+	 * Goes front to rear through the requests queue, popping them and adding 
+	 * students to classes whenever possible.  Prints a relevant message 
+	 * when unable to.
+	 */
 	@Override
 	public void processRequests() {
 		
@@ -155,6 +182,13 @@ public class Controller implements IController{
 		
 	}
 
+	/**
+	 * Checks the available courses for one matching the parameters, 
+	 * then returns a reference to it.
+	 * 
+	 * @param courseDept
+	 * @param courseNumber
+	 */
 	@Override
 	public Course getCourse(String courseDept, int courseNumber) {
 		
@@ -175,6 +209,9 @@ public class Controller implements IController{
 		
 	}
 	
+	/**
+	 * Basic Consumer of Courses.  Calls their printClassList methods.
+	 */
 	Consumer<Course> action = x -> {
 		
 		x.printClassList();
@@ -182,6 +219,10 @@ public class Controller implements IController{
 		
 	};
 
+	/**
+	 * Creates an iterator through the available courses, and prints 
+	 * their lists of enrolled students.
+	 */
 	@Override
 	public void printClassList() {
 		
