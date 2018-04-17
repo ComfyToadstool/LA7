@@ -2,16 +2,17 @@ package edu.wmich.cs1120.StanRitsema.LA7;
 
 public class PriorityQueue<T extends Comparable<T>> {
 	
-	Node front;
-	Node rear;
+	private static boolean DEBUG = false;
+	
+	Node<T> front;
 	
 	public PriorityQueue() {
-		front = rear = null;
+		front = null;
 	}
 
 	public boolean isEmpty() {
 		
-		return ( front == rear );
+		return ( front == null );
 		
 	}
 	
@@ -27,56 +28,57 @@ public class PriorityQueue<T extends Comparable<T>> {
 		
 	}
 	
-	public void enqueque(Request next) {
+	public void enqueue(T next) {
 		
-		Node pending = new Node(next);
+		Node<T> pending = new Node<T>(next);
 		
 		if( this.front == null ) {
 			
 			this.front = pending;
 			
-		}else if( this.front.getNext() == null ){
+		}else {
 			
 			int comp = front.getData().compareTo(pending.getData());
+			
+			if( DEBUG ) {
+				System.err.println("Initial comp value is " + comp);
+			}
 			
 			if( comp < 0 ) {
 				
 				pending.setNext(front);
 				
-				rear = front;
-				
 				front = pending;
+				
+				return;
 				
 			}else {
 				
-				front.setNext(pending);
+				Node<T> pointer = front;
 				
-				rear = pending;
-				
-			}
-			
-		}else {
-			
-			Node pointer = front;
-			
-			while( pointer.getNext().getNext() != null ) {
-				
-				int comp = pointer.getNext().getData().
-						compareTo(pending.getData());
-				
-				if( comp < 0 ) {
-					
-					pending.setNext(pointer.getNext());
-					pointer.setNext(pending);
-					
-				}else {
+				while( (pointer.getNext() != null)
+						&& ( pointer.getNext().getData().
+								compareTo(pending.getData()) >= 0 ) ) {
 					
 					pointer = pointer.getNext();
 					
 				}
 				
+				pending.setNext(pointer.getNext());
+				
+				pointer.setNext(pending);
+				
 			}
 			
+		}
+		
+		if( DEBUG ) {
+			System.err.println("The current queue is: ");
+			Node<T> travel = front;
+			while( travel != null ) {
+				System.err.println(travel.getData().toString());
+				travel = travel.getNext();
+			}
 		}
 		
 	}

@@ -23,10 +23,14 @@ public class Request implements Comparable<Request>{
 	@Override
 	public int compareTo(Request other) {
 		
+		if( other == null ) {
+			return 1;
+		}
+		
 		int priority = 0;
 		
 		// check major
-		if( deptMatch() ){
+		if( this.deptMatch() ){
 			priority++;
 		}	
 		if( other.deptMatch() ) {
@@ -36,12 +40,13 @@ public class Request implements Comparable<Request>{
 			return priority;
 		}
 		
+		int yearsA = yearsFromGraduation(this.studentLevel);
+		int yearsB = yearsFromGraduation(other.studentLevel);
+		
 		// check graduation time
-		if( yearsFromGraduation(this.studentLevel) <
-				other.yearsFromGraduation(other.studentLevel) ) {
+		if( yearsA < yearsB ) {
 			priority++;
-		}else if( yearsFromGraduation(this.studentLevel) >
-				other.yearsFromGraduation(other.studentLevel) ) {
+		}else if( yearsA > yearsB ) {
 			priority--;
 		}
 		
@@ -80,6 +85,13 @@ public class Request implements Comparable<Request>{
 	public boolean deptMatch() {
 		
 		return ( this.studentDept.equalsIgnoreCase(this.courseDept) );
+		
+	}
+	
+	public String toString() {
+		
+		return (this.studentName + " is requesting "
+				+ this.courseDept + " " + this.courseNumber);
 		
 	}
 	

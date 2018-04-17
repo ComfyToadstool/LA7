@@ -1,6 +1,6 @@
 package edu.wmich.cs1120.StanRitsema.LA7;
 
-public class Node<E extends Comparable> implements INode<E>{
+public class Node<E> implements INode<E>{
 	
 	E data;
 	Node<E> next;
@@ -22,13 +22,13 @@ public class Node<E extends Comparable> implements INode<E>{
 
 	@Override
 	public E getData() {
-		// TODO Auto-generated method stub
+		
 		return this.data;
 	}
 
 	@Override
 	public Node<E> getNext() {
-		// TODO Auto-generated method stub
+		
 		return this.next;
 	}
 

@@ -7,6 +7,8 @@ import java.util.function.Consumer;
 
 public class Controller implements IController{
 	
+	private static boolean DEBUG = false;
+	
 	PriorityQueue<Request> requests;
 	ArrayList<Course> courses;
 	BufferedReader file1;
@@ -30,6 +32,10 @@ public class Controller implements IController{
 			
 			while( file1.ready() ) {
 				
+				if( DEBUG ) {
+					System.err.println("Reading arg1 file");
+				}
+				
 				String line = file1.readLine();
 				String[] field = line.split(",");
 				
@@ -37,8 +43,20 @@ public class Controller implements IController{
 				int num = Integer.parseInt(field[1]);
 				int capacity = Integer.parseInt(field[2]);
 				
+				if( DEBUG ) {
+					System.err.println("Adding " + dept + " " + num + " to course list");
+				}
+				
 				Course nClass = new Course(dept, num, capacity);
 				courses.add(nClass);
+				
+				if( DEBUG ) {
+					Course latest = courses.get(courses.size()-1);
+					String lDept = latest.getDept();
+					int lNum = latest.getNumber();
+					System.err.println("Last course added is "
+							+ lDept + " " + lNum);
+				}
 				
 			}
 			
@@ -55,7 +73,9 @@ public class Controller implements IController{
 			
 			while( file2.ready() ) {
 				
-				// read in the record
+				if( DEBUG ) {
+					System.err.println("Reading arg2 file");
+				}
 				
 				String line = file2.readLine();
 				String[] field = line.split(",");
@@ -66,8 +86,13 @@ public class Controller implements IController{
 				String cDept = field[3];
 				int cNum = Integer.parseInt(field[4]);
 				
-				Request nRequest = new Request(sName, sLevel,
-						sDept, cDept, cNum);
+				if( DEBUG ) {
+					System.err.println("Adding " + sName
+							+ "'s request for " + cDept + " " + cNum);
+				}
+				
+				Request nRequest = new Request(sName, sDept,
+						sLevel, cDept, cNum);
 				addRequest(nRequest);
 				
 			}
@@ -81,7 +106,7 @@ public class Controller implements IController{
 	@Override
 	public void addRequest(Request req) {
 		
-		this.requests.enqueque(req);
+		this.requests.enqueue(req);
 		
 	}
 
@@ -91,13 +116,25 @@ public class Controller implements IController{
 		if( requests.isEmpty() ) {
 			System.err.println("No requests to process!");
 			return;
+		}else if( (courses.size() == 0) ) {
+			System.err.println("No courses known!");
+			return;
 		}
+		
+		System.out.println();
+		
+		for(int i = 0; i < courses.size(); i++) {
+			System.out.println(courses.get(i).toString());
+		}
+		
 		
 		while( !requests.isEmpty() ) {
 			
 			Request pending = requests.dequeque();
 			
-			System.out.println("Request" + pending + " processed.");
+			System.out.println("Request@"
+					+ Integer.toHexString(System.identityHashCode(pending))
+					+ " processed.");
 			
 			String sName = pending.getName();
 			String cDept = pending.getCourseDept();
@@ -113,6 +150,8 @@ public class Controller implements IController{
 			}
 			
 		}
+		
+		System.out.println();
 		
 	}
 
@@ -139,6 +178,7 @@ public class Controller implements IController{
 	Consumer<Course> action = x -> {
 		
 		x.printClassList();
+		System.out.println();
 		
 	};
 

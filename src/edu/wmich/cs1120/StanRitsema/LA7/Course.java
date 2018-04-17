@@ -12,6 +12,14 @@ public class Course implements ICourse{
 	private int enrollment;
 	private ArrayList<String> students;
 	
+	public String getDept() {
+		return this.dept;
+	}
+	
+	public int getNumber() {
+		return this.number;
+	}
+	
 	public Course(String dept, int number, int capacity) {
 		
 		this.dept = dept;
@@ -65,6 +73,12 @@ public class Course implements ICourse{
 		}
 		
 		return found;
+		
+	}
+	
+	public String toString() {
+		
+		return (this.dept + "," + this.number + "," + this.capacity);
 		
 	}
 
