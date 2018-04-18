@@ -113,7 +113,7 @@ public class Course implements ICourse{
 		
 		boolean found = false;
 		
-		if( this.dept.equals(dept) && (this.number == number) ) {
+		if( this.dept.equalsIgnoreCase(dept) && (this.number == number) ) {
 			found = true;
 		}
 		

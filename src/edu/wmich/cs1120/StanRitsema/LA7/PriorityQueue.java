@@ -29,7 +29,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 	 * 
 	 * @return data
 	 */
-	public T dequeque() {
+	public T dequeue() {
 		
 		T data;
 		

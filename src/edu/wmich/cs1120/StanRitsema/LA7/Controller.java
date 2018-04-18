@@ -157,7 +157,7 @@ public class Controller implements IController{
 		
 		while( !requests.isEmpty() ) {
 			
-			Request pending = requests.dequeque();
+			Request pending = requests.dequeue();
 			
 			System.out.println("Request@"
 					+ Integer.toHexString(System.identityHashCode(pending))

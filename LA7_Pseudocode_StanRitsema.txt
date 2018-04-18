@@ -1,0 +1,328 @@
+Pseudocode for CS 1120 Project 7
+	Course Registration System
+	
+Author: Stan Ritsema
+
+Link to project in Git:
+
+class Controller
+
+	this class implements the IController interface
+	
+	create a PriorityQueue of type Request named requests
+	create an ArrayList of type Course named courses
+	create a BufferedReader named file1
+	create a BufferedReader named file2
+	
+	constructor Controller( PriorityQueue of type Request named requestQueue, 
+		ArrayList of type Course named courses, BufferedReader fileIn, 
+		BufferedReader fileIn1 )
+		set this instance' requests equal to requestQueue
+		set this instance' courses equal to courses
+		set this instance' file1 equal to fileIn
+		set this instance' file2 equal to fileIn1
+		
+	method readCourseFile
+		try to
+			while the result of calling file1's ready method is true
+				create a String named line and set it equal to the result of 
+					calling file1's readLine method
+				create a String array named field and set it equal to the result 
+					of calling line's split method with parameter ","
+				create a String named dept and set it equal to field's 0th element
+				create an integer named num and set it equal to the result of 
+					calling Integer's parseInt method with parameter field's 1st
+					element
+				create an integer named capacity and set it equal to the result 
+					of calling Integer's parseInt method with parameter field's 
+					2nd element
+				create a Course named nClass and set it equal to a new Course 
+					with parameters dept, num, and capacity
+				call course's add method with parameter nClass
+		catch an IOException named e
+			print the String "Error when reading course.txt" to the console
+			
+	method readRequestFile
+		try to
+			while the result of calling file2's ready method is true
+				create a String named line and set it equal to the result of 
+					calling file1's readLine method
+				create a String array named field and set it equal to the result 
+					of calling line's split method with parameter ","
+				create a String named sName and set it equal to field's 0th element
+				create a String named sLevel and set it equal to field's 1st element
+				create a String named sDept and set it equal to field's 2nd element
+				create a String named cDept and set it equal to field's 3rd element
+				create an integer named cNum and set it equal to the result of calling 
+					Integer's parseInt method with parameter field's 4th element
+				create a Request named nRequest and set it equal to a new Request 
+					with parameters sName, sDept, sLevel, cDept, and cNum
+				call the addRequest method with parameter nRequest				
+		catch an IOException named e
+			print the String "Error when reading course.txt" to the console
+			
+	method addRequest( Request req )
+		call this instance' requests' enqueue method with parameter req
+		
+	method processRequests
+		if the result of calling requests' isEmpty method is true
+			print the String "No requests to process!" to the console
+			call return
+		else if the result of calling courses' size method is equal to 0
+			print the string "No courses known!" to the console
+			call return
+		print a new blank line to the console
+		
+		for every integer i from 0 to less than the result of courses' size method
+			print the result of the toString method of each result of calling courses' 
+				get method with parameter i
+		while the result of calling requests' isEmpty method is not true
+			create a new Request named pending and set it equal to the result of calling 
+				requests' dequeue method
+			print a String composed of "Request@", the result of calling Integer's 
+				toHexString method with its parameter being the result of calling 
+				System's identityHashCode method with parameter pending, and " processed" 
+				to the console
+			create a String named sName and set it equal to the result of calling 
+				pending's getName method
+			create a String named cDept and set it equal to the result of calling 
+				pending's getCourseDept method
+			create an integer named cNum and set it equal to the result of calling 
+				pending's getCourseNumber method
+			create a Course named course and set it equal to the result of calling 
+				the getCourse method with parameters cDept and cNum
+			if the result of calling course' isFull method is true
+				print a String composed of sName, " cannot register for ", cDept, " ", 
+					and cNum to the console
+			else
+				call course' addStudent method with parameter sName
+		print a new blank line to the console
+		
+	method getCourse( String courseDept, integer courseNumber )
+		create a Course named course and set it equal to null
+		create an integer named i and set it equal to 0
+		while courses is equal to null and i is less than the result of calling 
+			courses' size method
+			if the result of calling the thisCourse method, of the result of calling 
+				courses' get method with parameter i, with parameters courseDept and 
+				courseNumber, is true
+				set course equal to the result of calling courses' get method with 
+					parameter i
+			increment i
+		return course
+		
+	create a Consumer of type Course named action, where x leads to calling x's 
+		printClassList method and then printing a new blank line to the console
+		
+	method printClassList
+		create a ListIterator of type Course named registrations and set it equal 
+			to the result of calling courses listIterator method
+		call registrations forEachRemaining method with parameter action
+		
+
+
+class Course
+
+	this class implements the ICourse interface
+	
+	create a String named dept
+	create an integer named number
+	create an integer named capacity
+	create an integer named enrollment
+	create an ArrayList of type String named students
+	
+	method getDept
+		return this instance' dept
+		
+	method getNumber
+		return this instance' number
+		
+	constructor Course( String dept, integer number, integer capacity )
+		set this instance' dept equal to dept
+		set this instance' number equal to number
+		set this instance' capacity equal to capacity
+		set students equal to a new ArrayList
+		
+	method isFull
+		return the result of checking whether or not this instance' enrollment 
+			is equal to this instance' capacity
+			
+	method addStudent( String name )
+		call this instance' students' add method with parameter name
+		increment this instance' enrollment
+		print the String composed of name, " successfully registered ", this 
+			instance' dept, " ", and this instance' number to the console
+			
+	create a Consumer of type String named action, where x leads to printing x 
+		to the console
+		
+	method printClassList
+		print the String composed of "Class List for ", this instance' dept, 
+			" ", and this instance' number to the console
+		create a ListIterator of type String named rollCall and set it equal to 
+			the result of calling students listIterator method
+		call rollCall's forEachRemaining method with parameter action
+	
+	method thisCourse( String dept, integer number )
+		create a boolean named found and set it equal to false
+		if both the result of calling this instance' dept's equalsIgnoreCase 
+			method with parameter dept and the result of checking whether this 
+			instance' number is equal to number are both true
+			set found equal to true
+		return found
+		
+	method toString
+		return a String composed of this instance's dept, ",", this instance' 
+			number, ",", and this instance' capacity
+	
+
+
+class Node
+
+	this class is of type E
+	this class implements the INode interface of type E
+	
+	create an E object named data
+	create a Node of type E named next
+	
+	constructor Node
+		set data equal to null
+		set next equal to null
+	
+	constructor Node( E input )
+		set this instance' data equal to input
+		set next equal to null
+		
+	constructor Node( E input, Node<E> succ )
+		set this instance' data equal to input
+		set this instance' next equal to succ
+		
+	method getData
+		return this instance' data
+		
+	method getNext
+		return this instance' next
+		
+	method setNext( Node<E> next )
+		set this instance' next equal to next
+		
+
+
+class PriorityQueue
+
+	this class is of type T, which extends Comparable of type T
+	
+	create a Node of type T named front
+	
+	constructor PriorityQueue
+		set front equal to null
+		
+	method isEmpty
+		return the result of checking whether or not front is equal to null
+		
+	method dequeue
+		create a T object named data
+		set data equal to the result of calling front's getData method, cast to T
+		set front equal to the result of calling front's getNext method
+		return data
+		
+	method enqueue( T next )
+		
+		create a Node of type T named pending and set it equal to a new Node of 
+			type T with parameter next
+		if this instance' front is equal to null
+			set this instance of front equal to pending
+		else
+			create an integer named comp and set it equal to the result of 
+				calling front's getData's compareTo method, its parameter being 
+				the result of calling pending's getData method
+			if comp is less than 0
+				call pending's setNext method with parameter front
+				set front equal to pending
+				call return
+			else
+				create a Node of type T named pointer and set it equal to front
+				while the result of calling pointer's getNext method is not null 
+					and the result of calling pointer's getNext's getData's 
+					compareTo method, with its parameter being the result of 
+					calling pending's getData method, is greater than or equal 
+					to 0
+					set pointer equal to the result of calling pointer's getNext 
+						method
+				call pending's setNext method, its parameter being the result of 
+					calling pointer's getNext method
+				calling pointer's setNext method with parameter pending
+		
+
+
+class Request
+
+	this class implements the Comparable interface of type Request
+
+	create a String named studentName
+	create a String named studentDept
+	create a String named studentLevel
+	create a String named courseDept
+	create an integer named courseNumber
+	
+	method getName
+		return this instance' studentName
+		
+	method getCourseDept
+		return this instance' courseDept
+		
+	method getCourseNumber
+		return this instance' courseNumber
+		
+	method compareTo( Request other )
+		if other is equal to null
+			return 1
+		create an integer named priority and set it equal to 0
+		if the result of calling this instance' deptMatch method is true
+			increment priority
+		if the result of calling other's deptMatch method is true
+			decrement priority
+		if priority does not equal 0
+			return priority
+		create an integer named yearsA and set it equal to the result of calling the 
+			yearsFromGraduation method with a parameter of this instance' studentLevel
+		create an integer named yearsB and set it equal to the result of calling the 
+			yearsFromGraduation method with a parameter of other's studentLevel
+		if yearsA is less than yearsB
+			increment priority
+		else if yearsA is greater than yearsB
+			decrement priority
+		return priority
+		
+	constructor Request( String studentName, String studentDept, String studentLevel,
+		String courseDept, integer courseNumber )
+		set this instance' studentName equal to studentName
+		set this instance' studentDept equal to studentDept
+		set this instance' studentLevel equal to studentLevel
+		set this instance' courseDept equal to courseDept
+		set this instance' courseNumber equal to courseNumber
+		
+	method yearsFromGraduation( String level )
+		create an integer named years and set it equal to -1
+		if the result of calling level's equalsIgnoreCase method with parameter "senior" is
+			true
+			set years equal to 0
+		if the result of calling level's equalsIgnoreCase method with parameter "junior" is
+			true
+			set years equal to 1
+		if the result of calling level's equalsIgnoreCase method with parameter "sophomore" is
+			true
+			set years equal to 2
+		if the result of calling level's equalsIgnoreCase method with parameter "freshman" is
+			true
+			set years equal to 3
+		return years
+		
+	method deptMatch
+		return the result of calling this instance' studentDept's equalsIgnoreCase method 
+			with the parameter this instance' courseDept
+			
+	method toString
+		return a String composed of the parts this instance' studentName, " is requesting ", 
+			this instance' courseDept, " ", and this instance' courseNumber
+		
