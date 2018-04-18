@@ -193,7 +193,7 @@ class Node
 		set this instance' data equal to input
 		set next equal to null
 		
-	constructor Node( E input, Node<E> succ )
+	constructor Node( E input, Node of type E named succ )
 		set this instance' data equal to input
 		set this instance' next equal to succ
 		
@@ -203,13 +203,17 @@ class Node
 	method getNext
 		return this instance' next
 		
-	method setNext( Node<E> next )
+	method setNext( Node of type E named next )
 		set this instance' next equal to next
 		
 
 
 class PriorityQueue
 
+	/*
+	The declaration below means that any type of object, which implements the 
+	Comparable interface, can be placed into this queue.
+	*/
 	this class is of type T, which extends Comparable of type T
 	
 	create a Node of type T named front
@@ -226,6 +230,21 @@ class PriorityQueue
 		set front equal to the result of calling front's getNext method
 		return data
 		
+	/*
+	The method above, dequeue, is implemented in the standard way for a queue.  That 
+	is, it stores a reference to the object to be return, moves the reference to 
+	the front of the queue one element back, and returns the store reference.
+	The method below, however, is specific to priority queues over regular queues. 
+	Ordinarily, we would have a reference to the rear of the queue.  The rear's  
+	element would be made to point to a newly made element and then the rear would 
+	be redirected to this new element.  In a priority queue we don't need a rear 
+	pointer because we don't initially know where we'll be inserting the new element. 
+	Instead, we compare the priority of the new element to each element of the current 
+	queue, starting from the front, until we find an element it has higher priority 
+	than.  We then set the new element to point to this lesser element and set the 
+	element in front of the lesser element to point to the new element.
+	*/
+	
 	method enqueue( T next )
 		
 		create a Node of type T named pending and set it equal to a new Node of 
@@ -257,6 +276,13 @@ class PriorityQueue
 
 class Request
 
+	/*
+	Request needs to be able to compare itself to other Request objects, so it 
+	implements the Comparable interface.  The interface is generic, and take 
+	a parameter to indicate what the implementing class will be comparing to. 
+	In this case we want to compare to other Request objects, so within the  
+	diamond brackets we put Request.
+	*/
 	this class implements the Comparable interface of type Request
 
 	create a String named studentName
@@ -274,6 +300,15 @@ class Request
 	method getCourseNumber
 		return this instance' courseNumber
 		
+	/*
+	Since this class implements the Comparable interface, with type parameter 
+	Request, we must implement this method to compare the current instance of this 
+	class with another such object (the passed reference to the 'other' Request 
+	object).  It needs to be an entire object referenced, and not simple a parameter 
+	of such, because two different members of each object are used in the comparison.
+	If the comparison favors the invoking object, the return value is positive.  If 
+	it instead favors the compared object, it is negative.  Otherwise, it is 0.
+	*/
 	method compareTo( Request other )
 		if other is equal to null
 			return 1
