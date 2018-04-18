@@ -3,7 +3,7 @@ Pseudocode for CS 1120 Project 7
 	
 Author: Stan Ritsema
 
-Link to project in Git:
+Link to project in Git: https://github.com/ComfyToadstool/LA7/tree/4c4b39a2b07ef34436866da8c7f4011c1a5562e1
 
 class Controller
 
